@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Selection Form</title>
+  <style>
+    :root {
+      --gradient-color-1: #16539f;
+      --gradient-color-2: #151515;
+      --particle-color-1: rgba(22, 83, 159, 0.5);
+      --particle-color-2: rgba(21, 21, 21, 0.5);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, var(--gradient-color-1), var(--gradient-color-2));
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+
+    .logo{
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      margin: 10px;
+      
+    }
+
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+  #background-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+#background-gradient {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--gradient-color-1) 0%, var(--gradient-color-2) 100%);
+  pointer-events: none;
+  z-index: -1;
+  opacity: 1;
+  transition: transform 0.5s ease;
+}
+
+
+    #teacherForm {
+      position: relative;
+      z-index: 10;
+      max-width: 600px;
+      margin: 30px auto;
+      background-color: rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.5s ease;
+    }
+
+    h2, h3 {
+      text-align: center;
+      color: #ffffff;
+      text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      font-size: 14px;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    input::placeholder, select option {
+      color: #cccccc;
+    }
+
+    select option {
+      background-color: #151515;
+      color: #ffffff;
+    }
+
+    button {
+      background-color: #095db7;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .remove-pair {
+      background-color: #dc3545;
+      width: auto;
+      margin-left: 10px;
+    }
+
+    #add-teacher-subject {
+      background-color: #28a745;
+      margin-top: 15px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      #teacherForm {
+        padding: 15px;
+        margin: 10px;
+      }
+
+      label, input, select, button {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="background-canvas"></canvas>
+  <div id="background-gradient"></div>
+  <div class="logo">
+    <img src="logo.png" width="370px" alt="Logo">
+  </div>
+
+  <h2>Faculty Selection Form</h2>
+  <form id="teacherForm">
+    <label for="year">Year:</label>
+    <select id="year" required>
+      <option value="">Select Year</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+
+    <label for="academicYear">Academic Year:</label>
+    <input 
+      type="text" 
+      id="academicYear" 
+      placeholder="Enter Academic Year (YYYY-YYYY)" 
+      pattern="^\d{4}-\d{4}$" 
+      required
+    >
+
+    <label for="semester">Semester:</label>
+    <select id="semester" required>
+      <option value="">Select Semester</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+    </select>
+
+    <label for="branch">Branch:</label>
+    <select id="branch" required>
+      <option value="">Select Branch</option>
+      <option value="CSE">CSE</option>
+      <option value="ECE">ECE</option>
+      <option value="EEE">EEE</option>
+      <option value="MECH">MECH</option>
+      <option value="CIVIL">CIVIL</option>
+      <option value="AI">AI</option>
+      <option value="AIML">AIML</option>
+      <option value="DS">DS</option>
+      <option value="CS">CS</option>
+      <option value="IT">IT</option>
+      <option value="MBA">MBA</option>
+      <option value="MCA">MCA</option>
+      <option value="BS&H">BS&H</option>
+    </select>
+
+    <label for="section">Section:</label>
+    <select id="section" required>
+      <option value="">Select Section</option>
+      <option value="A">A</option>
+      <option value="B">B</option>
+      <option value="C">C</option>
+      <option value="D">D</option>
+      <option value="E">E</option>
+      <option value="F">F</option>
+      <option value="G">G</option>
+    </select>
+
+    <h3>Teachers and Subjects</h3>
+
+    <div id="subjects-container">
+      <!-- Initial Teacher/Subject Pair -->
+      <div class="teacher-subject-pair">
+        <label for="teacher1">Teacher 1:</label>
+        <input type="text" id="teacher1" name="teacher" placeholder="Enter Teacher Name" required>
+
+        <label for="subject1">Subject 1:</label>
+        <input type="text" id="subject1" name="subject" placeholder="Enter Subject Name" required>
+      </div>
+    </div>
+
+    <button  type="button" id="add-teacher-subject">+ Add Teacher/Subject</button>
+
+    <button type="button" id="toFeedback">Next</button>
+    <button type="button" id="toCRUD">View Feedback Summary</button>
+  </form>
+
+  <script>
+    // Academic Year Validation
+    document.getElementById("academicYear").addEventListener("input", function(e) {
+      const value = e.target.value;
+      const pattern = /^\d{4}-\d{4}$/;
+      
+      if (pattern.test(value)) {
+        const [startYear, endYear] = value.split('-').map(Number);
+        if (endYear !== startYear + 1) {
+          e.target.setCustomValidity("End year must be exactly one year after start year");
+        } else {
+          e.target.setCustomValidity("");
+        }
+      } else {
+        e.target.setCustomValidity("Please enter year in YYYY-YYYY format");
+      }
+    });
+
+    // Add Teacher/Subject Pair
+    document.getElementById("add-teacher-subject").addEventListener("click", function() {
+      const container = document.getElementById("subjects-container");
+      const pairCount = container.getElementsByClassName("teacher-subject-pair").length + 1;
+      
+      // Create new pair div
+      const newPair = document.createElement("div");
+      newPair.className = "teacher-subject-pair";
+      
+      // Create teacher label and input
+      const teacherLabel = document.createElement("label");
+      teacherLabel.setAttribute("for", `teacher${pairCount}`);
+      teacherLabel.textContent = `Teacher ${pairCount}:`;
+      
+      const teacherInput = document.createElement("input");
+      teacherInput.type = "text";
+      teacherInput.id = `teacher${pairCount}`;
+      teacherInput.name = "teacher";
+      teacherInput.placeholder = "Enter Teacher Name";
+      teacherInput.required = true;
+      
+      // Create subject label and input
+      const subjectLabel = document.createElement("label");
+      subjectLabel.setAttribute("for", `subject${pairCount}`);
+      subjectLabel.textContent = `Subject ${pairCount}:`;
+      
+      const subjectInput = document.createElement("input");
+      subjectInput.type = "text";
+      subjectInput.id = `subject${pairCount}`;
+      subjectInput.name = "subject";
+      subjectInput.placeholder = "Enter Subject Name";
+      subjectInput.required = true;
+      
+      // Create remove button
+      const removeButton = document.createElement("button");
+      removeButton.type = "button";
+      removeButton.textContent = "Remove Pair";
+      removeButton.className = "remove-pair";
+      removeButton.addEventListener("click", function() {
+        container.removeChild(newPair);
+        // Reindex remaining pairs
+        reindexPairs();
+      });
+      
+      // Append elements to new pair div
+      newPair.appendChild(teacherLabel);
+      newPair.appendChild(teacherInput);
+      newPair.appendChild(subjectLabel);
+      newPair.appendChild(subjectInput);
+      newPair.appendChild(removeButton);
+      
+      // Add to container
+      container.appendChild(newPair);
+    });
+
+    // Reindex pairs after removing
+    function reindexPairs() {
+      const pairs = document.getElementsByClassName("teacher-subject-pair");
+      for (let i = 0; i < pairs.length; i++) {
+        const teacherLabel = pairs[i].getElementsByTagName("label")[0];
+        const teacherInput = pairs[i].getElementsByTagName("input")[0];
+        const subjectLabel = pairs[i].getElementsByTagName("label")[1];
+        const subjectInput = pairs[i].getElementsByTagName("input")[1];
+        
+        teacherLabel.setAttribute("for", `teacher${i+1}`);
+        teacherLabel.textContent = `Teacher ${i+1}:`;
+        teacherInput.id = `teacher${i+1}`;
+        
+        subjectLabel.setAttribute("for", `subject${i+1}`);
+        subjectLabel.textContent = `Subject ${i+1}:`;
+        subjectInput.id = `subject${i+1}`;
+      }
+    }
+
+    // Next button event listener
+    document.getElementById("toFeedback").addEventListener("click", function () {
+      const academicYear = document.getElementById("academicYear").value;
+      const year = document.getElementById("year").value;
+      const semester = document.getElementById("semester").value;
+      const branch = document.getElementById("branch").value;
+      const section = document.getElementById("section").value;
+
+      const teacherSubjectPairs = [];
+      
+      const pairs = document.getElementsByClassName("teacher-subject-pair");
+      for (let pair of pairs) {
+        const teacher = pair.querySelector('input[name="teacher"]').value;
+        const subject = pair.querySelector('input[name="subject"]').value;
+        
+        if (!teacher || !subject) {
+          alert(`Please complete all Teacher and Subject details.`);
+          return;
+        }
+        
+        teacherSubjectPairs.push({ teacher, subject });
+      }
+
+      const params = new URLSearchParams({
+        academicYear,
+        year,
+        semester,
+        branch,
+        section,
+        teacherSubjectPairs: JSON.stringify(teacherSubjectPairs)
+      });
+
+      window.location.href = `feedbackForm.html?${params.toString()}`;
+    });
+
+    // CRUD button event listener
+    document.getElementById("toCRUD").addEventListener("click", function() {
+      window.location.href = "crudOperations.html";
+    });
+  </script>
+  <script src="sc.js"> </script>
+</body>
+</html>

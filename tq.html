@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Thank You!</title>
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400|Montserrat:700' rel='stylesheet' type='text/css'>
+    <style>
+
+    .logo{
+          align-items: center;
+          justify-content: center;
+          display: flex;
+          margin: 10px;
+    }
+    
+    @import url(//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css);
+    @import url(//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
+    
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: 'Lato', sans-serif;
+        overflow: hidden;
+    }
+
+    .site-header {
+        text-align: center;
+        opacity: 0;
+        transform: translateY(-50px);
+        animation: fadeInDown 1s forwards;
+    }
+
+    .site-header__title {
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 3rem;
+        margin-bottom: 20px;
+        text-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .main-content {
+        text-align: center;
+        background: rgba(0, 0, 0, 0.451);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        opacity: 0;
+        transform: scale(0.7);
+        animation: popIn 0.8s 0.5s forwards;
+    }
+
+    .main-content__checkmark {
+        font-size: 5rem;
+        color: #48bb78;
+        display: block;
+        margin-bottom: 20px;
+        animation: bounce 1s;
+    }
+
+    .main-content__body {
+        color: #f0f0f0; /* Changed text color to a light gray */
+        font-size: 1.2rem;
+        max-width: 500px;
+        line-height: 1.6; 
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3); /* Added text shadow for better readability */
+    }
+
+    .site-footer {
+        margin-top: 20px;
+        opacity: 0;
+        animation: fadeIn 1s 1.2s forwards;
+    }
+
+    .site-footer__fineprint {
+        color: rgba(255,255,255,0.7);
+        font-size: 0.9rem;
+    }
+
+    @keyframes fadeInDown {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes popIn {
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+        40% {transform: translateY(-30px);}
+        60% {transform: translateY(-15px);}
+    }
+
+    @keyframes fadeIn {
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Particle background effect */
+    #particles-js {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+    </style>
+</head>
+<body onload="disableBackButton();">
+    <!-- Particle background container -->
+    <div id="particles-js"></div>
+
+    <div class="logo">
+        <img src="logo.png" width="360px" >
+    </div>
+
+    <header class="site-header" id="header">
+        <h1 class="site-header__title" data-lead-id="site-header-title">THANK YOU!</h1>
+    </header>
+
+    <div class="main-content">
+        <i class="fa fa-check main-content__checkmark" id="checkmark"></i>
+        <p class="main-content__body" data-lead-id="main-content-body">Thank You For Submitting Your Response.</p>
+    </div>
+
+    <footer class="site-footer" id="footer">
+        <p class="site-footer__fineprint" id="fineprint">© 2024 All Rights Reserved {CS}</p>
+    </footer>
+
+    <!-- Particle.js Library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Disable back button function
+        function disableBackButton() {
+            window.history.forward();
+        }
+
+        // Prevent back navigation through history manipulation
+        window.onload = disableBackButton; 
+
+        // Handle page show events for cached pages (like when user presses back)
+        window.onpageshow = function(evt) {
+            if (evt.persisted) disableBackButton();
+        }
+
+        // Prevent back on page unload (although this is optional)
+        window.onunload = function() {
+            void(0);
+        };
+
+        // Particle background configuration
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#ffffff' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5, random: false },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, distance: 150, color: '#ffffff', opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 6, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: { onhover: { enable: true, mode: 'repulse' } },
+                modes: { repulse: { distance: 100, duration: 0.4 } }
+            },
+            retina_detect: true
+        });
+        history.pushState(null, null, document.URL);
+        window.addEventListener('popstate', function () {
+            history.pushState(null, null, document.URL);
+        });
+
+        // Additional security: If user somehow gets back, redirect to thank you page
+        if(document.referrer.includes('feedback')) {
+            window.location.replace('tq.html');
+        }
+    </script>
+    
+</body>
+</html>
